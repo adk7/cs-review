@@ -23,22 +23,15 @@ def merge(items, low, mid, high):
     
     while i < len(L) and j < len(R):
         
-        if(L[i] < R[j]):
+        if(L[i] <= R[j]):
             items[k] = L[i]
             i+=1
-        elif(R[j] < L[i]):
-            items[k] = R[j]
-            j+=1
         else:
             items[k] = R[j]
             j+=1
-            k+=1
-            items[k]=L[i]
-            i+=1
-            
+     
         k+=1
 
-    
     while i < len(L):
         items[k] = L[i]
         i+=1
@@ -48,7 +41,4 @@ def merge(items, low, mid, high):
         items[k] = R[j]
         j+=1
         k+=1
-
-        
-   
-            
+    
