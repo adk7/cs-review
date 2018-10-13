@@ -10,7 +10,6 @@ def quick_sort_(items, first, last):
         quick_sort_(items, p + 1, last)
         
 def get_partition(items, first, last):
-    
     pivot = items[first]
     boundary = first
     
