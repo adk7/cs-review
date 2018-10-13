@@ -1,4 +1,3 @@
-
 def paint_fill(matrix, row_clicked, col_clicked, old_color, new_color):
     
     total_rows, total_cols = matrix.shape
