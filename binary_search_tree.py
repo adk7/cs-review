@@ -61,7 +61,7 @@ def breadth_first_traversal(node):
     
     while len(to_check) != 0:
         current_node = to_check.popleft()
-        print(current_node.data) #process node
+        print(current_node.data, sep=", ") #process node
         
         if(current_node.left):
             to_check.append(current_node.left)
@@ -85,7 +85,7 @@ def depth_first_traversal(node):
         return
         
     depth_first_traversal(node.left)
-    print(node.data)
+    print(node.data, end=", ")
     depth_first_traversal(node.right)
         
     return 
@@ -120,3 +120,138 @@ def max_depth(root):
     return max(left_depth, right_depth)
     
 
+def print_range(root, low, high):
+    
+    
+    if not root:
+        return
+        
+    if low <= root.data:
+        print_range(root.left, low, high)
+    
+    if low <= root.data <= high:
+        print(root.data)
+        
+    if low > root.data:
+        print_range(root.right, low, high) 
+
+
+def is_bst(root):
+    
+    if not root:
+        return True
+        
+    if (not root.left) and (not root.right):
+        return True
+    
+    left = right = True
+        
+    if root.left:
+        if root.left.data <= root.data:
+            left = is_bst(root.left)
+        else:
+            return False
+            
+    if root.right:
+        if root.right.data > root.data:
+            right = is_bst(root.right)
+        else:
+            return False
+            
+    return left and right    
+        
+
+
+def check_path_sum(node, total, current_total = 0):
+    '''
+    this checks for running total! different from sum of path from root to leaf!!!! 
+    This function returns true if the path from root to any node yields a sum of total! 
+    Different fromthe function below which checks for sum of path from root to leaf
+    '''
+    
+    if not node:
+        return current_total == total
+     
+    current_total += node.data
+    if current_total == total:
+            return True
+
+    check_left = check_path_sum(node.left, total, current_total)
+    check_right = check_path_sum(node.right, total, current_total)
+    
+    if check_left or check_right:
+        return True
+    else:
+        return False
+        
+        
+
+def check_path_sum_root_to_leaf(node, total):
+    '''
+    Checks if a path from root to leaf has sum of total
+    '''
+    
+    if not node:
+        return False
+     
+    if (not node.left) and (not node.right):
+        return node.data == total
+        
+    if total < node.data:
+        return False
+    
+    if node.left:
+        check_left = check_path_sum(node.left, total - node.data)
+    
+    if node.right:
+        check_right = check_path_sum(node.right, total - node.data)
+    
+    if check_left or check_right:
+        return True
+    else:
+        return False
+        
+        
+        
+def print_all_paths(node, current_path = []):
+    '''
+    Print all paths from root node to the leaf node
+    '''
+    
+    if not node:
+        return
+        
+    current_path.append(node)
+        
+    if not node.left and not node.right:    
+        print(*current_path, sep = " -> ", end="\n")
+    
+    print_all_paths(node.left, current_path)
+    print_all_paths(node.right, current_path)
+    
+    current_path.remove(node)
+    
+
+
+def least_common_ancestor(root, node_a, node_b):
+    
+    if not root:
+        return None
+        
+    
+    if root == node_a or root == node_b:
+        return root
+        
+    left_lca = least_common_ancestor(root.left, node_a, node_b)
+    right_lca = least_common_ancestor(root.right, node_a, node_b)
+    
+    if left_lca and right_lca:
+         return root
+         
+    if left_lca:
+        return left_lca
+        
+    return right_lca
+                    
+    
+        

@@ -79,3 +79,22 @@ def mirror_tree(root):
     mirror_tree(root.left)
     mirror_tree(root.right)
     
+
+def count_distinct_trees(n):
+    '''
+    how many unique structural trees can be formed with n nodes? 
+    '''
+    
+    if n <= 1:
+        return 1
+        
+    total = 0
+    for i in range(1, n+1):
+        left_count = count_distinct_trees(i - 1)
+        right_count = count_distinct_trees(n - i)
+        
+        total += (left_count * right_count)
+        
+    return total
+    
+    
