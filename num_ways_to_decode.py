@@ -57,31 +57,4 @@ def num_ways_dp_(data, k, cache):
     cache[k] = result
     return result
 
-def decode(data, k):
-    from itertools import zip_longest
-    
-    mapper = dict(zip_longest(range(1,27), list("abcdefghijklmnopqrstuvwxyz")))
-    
-    if k == 0:
-        return ""
-        
-    i = len(data) - k
-    
-    if data[i] == '0':
-        return ""   
-    
-    results = []  
-    key_1 = data[i]
-    key_2 = data[i:i+2]
-    
-    if key_1 in mapper:
-        ans_1 = mapper[key_1] + decode(data, k -1)
-    else:
-        ans_1 = ""
-     
-    if key_2 in mapper:
-        ans_2 = mapper[key_2] + decode(data, k -2)
-    else:
-        ans_1 = ""
-        
   

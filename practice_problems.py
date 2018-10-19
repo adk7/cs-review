@@ -268,34 +268,7 @@ def BFS(root):
                 
         if current_node.right:
             to_process.append((current_node.right, current_level+1))
-            
-def decode(string, current_result="", results=[]):
-    from itertools import zip_longest
-    from collections import defaultdict
-    
-    mapper = defaultdict(int)
-    mapper.update(dict(zip_longest(range(1,27), list("abcdefghijklmnopqrstuvwxyz"))))
-    
-    if not string:
-        return results
-    
-    if len(string) == 1:
-        current_result += mapper[int(string)]
-        results.append(current_result)
-        return results
-        
-    key_1 = int(string[0])
-    key_2 = int(string[0:2])
-    
-    if key_1 in mapper:
-        results += decode(string[1:], current_result + mapper[key_1], results)
-    if key_2 in mapper:
-        results += decode(string[2:], current_result + mapper[key_2], results)
-        
-    return results
-        
-        
- 
+                     
         
 def num_ways_to_decode(string):
     
@@ -368,3 +341,22 @@ def num_ways_dp_(data, k, cache):
 def num_ways_dp(data):
     cache = [None] * (len(data) + 1)
     return num_ways_dp_(data, len(data), cache)
+    
+    
+def product_of_array(array, index):
+    
+    left = [1] * len(array)
+    right = [1] * len(array)
+    
+    prod_left = 1
+    prod_right = 1
+    
+    for i in range(1, len(array)):
+        prod_left *= array[i - 1]
+        left[i] = prod_left
+        
+    for i in range(len(array) - 2, -1, -1):
+        prod_right *= array[i + 1]
+        right[i] = prod_right
+        
+    return left[index] * right[index]
