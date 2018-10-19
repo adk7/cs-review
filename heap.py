@@ -22,7 +22,14 @@ class Heap(object):
     
     def __len__(self):
         return len(self.heap)
-           
+    
+    def is_empty(self):
+        return len(self.heap) == 0       
+                         
+    def insert(self, value):
+        self.heap.append(value)
+        self._siftup(len(self.heap) -1)
+    
     def heapify(self, end_index):
              
         child_index = end_index
@@ -111,9 +118,6 @@ class MinHeap(Heap):
     def __init__(self, heap=None, compare=operator.lt):
         super().__init__(heap, compare)
         
-    def insert(self, value):
-        self.heap.append(value)
-        self._siftup(len(self.heap) -1)
                 
     def pop_min(self):
         min_value = self.heap[0]
@@ -125,22 +129,28 @@ class MinHeap(Heap):
             self.heap.pop()
             
         return min_value
-        
+    
+    def get_min(self):
+        return self.heap[0]        
         
 class MaxHeap(Heap):
     
     def __init__(self, heap=None, compare=operator.gt):
         super().__init__(heap, compare)
-        
-    def insert(self, value):
-        self.heap.append(value)
-        self._siftup(len(self.heap) -1)
                 
     def pop_max(self):
         min_value = self.heap[0]
-        self.heap[0] = self.heap.pop()
+        if len(self.heap) > 1: 
+            self.heap[0] = self.heap.pop() # this doesnt work when there is only one element in the heap
+            self._siftdown(0)
+        else:
+            self.heap.pop()
         self._siftdown(0)
-        return min_value    
+        return min_value
+        
+    def get_max(self):
+        return self.heap[0]  
+          
 
             
 def heap_sort(items):
@@ -197,3 +207,35 @@ def merge_k_sorted_lists(k_sorted_lists):
             min_heap.insert((k_sorted_lists[index].pop(0), index))
     
     return final_sorted_list
+    
+    
+    
+def median_of_stream(max_heap, min_heap, number):
+    
+    """
+    Find the median of an incoming stream of data
+    """
+    
+    if not max_heap.is_empty() and number > max_heap.get_max():
+        min_heap.insert(number)
+    else:
+        max_heap.insert(number)
+        
+    if len(max_heap) > len(min_heap) + 1:
+        max_heap.insert(min_heap.pop_min())
+    
+    if len(min_heap) > len(max_heap) + 1:
+        min_heap.insert(max_heap.pop_max())
+        
+    if len(max_heap) == len(min_heap):
+        return 0.5 * (max_heap.get_max() + min_heap.get_min())
+        
+    if len(max_heap) > len(min_heap):
+        return max_heap.get_max()
+        
+    if len(min_heap) > len(max_heap):
+        return min_heap.get_min() 
+    
+    
+    
+        
