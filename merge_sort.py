@@ -1,7 +1,5 @@
 def merge_sort(items):
-    
     return merge_sort_(items, 0, len(items)-1)
-    
 
 def merge_sort_(items, low, high):
     
@@ -11,8 +9,7 @@ def merge_sort_(items, low, high):
         merge_sort_(items, low, mid)
         merge_sort_(items, mid+1, high)
         merge(items, low, mid, high)
-        
-        
+            
 def merge(items, low, mid, high):
   
     L = items[low:mid+1]

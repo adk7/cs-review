@@ -17,7 +17,7 @@ def all_strings(data, k, results=set([""])):
     if key_1 != "0":
         found_1 = all_strings(data, k - 1, {s + i2a[key_1] for s in results})
     else:
-        return set([""])
+        return set()
         
     found_2 = set()
     

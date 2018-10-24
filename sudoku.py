@@ -61,6 +61,5 @@ def rotate_list(items, n):
     return result
     
 def get_rotation_n(row_n):
-    
     return ((row_n//3) + (3*(row_n%3)))
         
